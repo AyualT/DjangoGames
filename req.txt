@@ -1,0 +1,9 @@
+Django
+Pillow
+django-utils-six
+django-filter
+django-cors-headers
+django-simple-captcha
+python-dotenv
+django-tracking2
+django-hitcount

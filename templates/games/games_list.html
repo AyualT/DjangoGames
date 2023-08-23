@@ -1,0 +1,56 @@
+{% extends 'games/base.html' %}
+
+{% block new %}
+    {% if perms.games.change_game %}
+        <a href="{% url 'game_new' %}" style="float: left; font-size: 50px; margin-top: 50px; margin-left: 50px;">
+            {% include '../icons/file-earmark-plus.svg' %}
+    </a>
+    {% endif %}
+{% endblock%}
+
+{% block filter %}
+    <div class="filter">
+        <form method="GET">
+            {{filter.form.as_p}}
+            <button type="submit">Search</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% for game in page_obj %}
+        {% if game.is_active %}
+        <div class="game_card">  
+            <div class="game_card_top">
+                <a href="{% url 'game_detail' pk=game.pk%}"><p class="game_title">{{game.title}}</p></a>
+            </div>
+            {% if perms.games.change_game %}
+            <div class="game_edit">
+                <a href="{% url 'game_edit' pk=game.pk %}">
+                    {% include 'icons/three-dots-vertical.svg' %}
+                </a>
+            </div>
+            {% endif %}
+            <p>{{game.studio}}</p>
+            <p>{{game.desc}}</p>
+        </div>
+        {% endif %}
+    {% endfor %}
+    <div class="paginator" style="margin: auto;">
+        <span>
+            {% if page_obj.has_previous %}
+                <a href="?page=1">first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span>
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "games/base.html" %}
+{% block new %}
+{% if perms.publishers.change_publisher %}
+    <a href="{% url 'publisher_new' %}" style="float: left; font-size: 50px; margin-top: 50px; margin-left: 50px;">
+        {% include '../icons/file-earmark-plus.svg' %}
+    </a>
+{% endif %}
+{% endblock%}
+{% block content %}
+    {% for publisher in publishers %}
+        <div class="game_card">  
+            <a href="{% url 'publisher_detail' pk=publisher.pk%}"><p class="game_title">{{publisher.name}}</p></a>
+            <p>{{publisher.founded}}</p>
+            <p>{{publisher.desc}}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

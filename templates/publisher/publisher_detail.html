@@ -1,0 +1,33 @@
+{% extends 'games/base.html' %}
+{% load hitcount_tags %}
+ 
+{% block content %}
+<div class="game_card" style="border-bottom: 2px black solid; margin: 10px;">    
+    <div class="game_card_top">
+        <div class="game_title">
+            <p class>{{publisher.name}}</p>
+        </div>
+        {% if perms.publishers.change_publisher %}
+        <div class="game_edit">
+            <a href="{% url 'publisher_edit' pk=publisher.pk %}">
+                {% include 'icons/three-dots-vertical.svg' %}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    <!-- <img src="/media/{{publisher.logo}}" alt=""> -->
+    <p>{{publisher.headquarters}}</p>
+    <p>{{publisher.main_site}}</p>
+    <p>{{publisher.founder}}</p>
+    <p>{{publisher.founded}}</p>
+    <p>Views: {% get_hit_count for publisher %}</p>
+    {% for game in games_list %}
+        <p>{{game.title}}</p> 
+    {% endfor %} 
+</div>
+<div class="recommended">
+    {% for rec in recommended %}
+        <a href="{% url 'publisher_detail' pk=rec.pk %}">{{rec.name}}</a>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'games/base.html' %}
+{% block new %}
+<a href="{% url 'studio_new' %}" style="float: left; font-size: 50px; margin-top: 50px; margin-left: 50px;">
+    {% include '../icons/file-earmark-plus.svg' %}
+</a>
+{% endblock%}
+{% block content %}
+    {% for studio in studios %}
+        <div class="game_card" style="border-bottom: 2px black solid; margin: 10px;">    
+            <a href="{% url 'studio_detail' pk=studio.pk %}"><p>{{studio.name}}</p></a>
+            <p>{{studio.headquarters}}</p>
+            <p>{{studio.main_site}}</p>
+            {% for game in studio.games_list %}
+                <p>{{game.title}} </p>
+            {% endfor %}    
+        </div>
+    {% endfor %}
+{% endblock %}
